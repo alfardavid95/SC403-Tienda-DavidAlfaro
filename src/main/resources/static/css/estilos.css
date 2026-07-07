@@ -1,0 +1,12 @@
+body {
+    background-color: #f7f8fa;
+}
+
+.producto-img {
+    height: 220px;
+    object-fit: cover;
+}
+
+.card-title {
+    min-height: 2rem;
+}

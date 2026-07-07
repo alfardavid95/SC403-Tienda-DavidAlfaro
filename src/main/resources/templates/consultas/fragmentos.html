@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="~{general/fragmentos :: head}"></head>
+
+    <body>
+
+        <!-- Sección superior con las consultas de la clase y la Práctica #2 -->
+        <section th:fragment="consultas" class="container-fluid mt-3">
+            <div class="row g-3">
+
+                <div class="col-12 col-md-6 col-xl-3">
+                    <div th:replace="~{consultas/fragmentos :: formConsulta('primary', #{consultas.derivadas}, '/consultas/consultaDerivada')}"></div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-3">
+                    <div th:replace="~{consultas/fragmentos :: formConsulta('warning', #{consultas.jpql}, '/consultas/consultaJPQL')}"></div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-3">
+                    <div th:replace="~{consultas/fragmentos :: formConsulta('success', #{consultas.sql}, '/consultas/consultaSQL')}"></div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-3">
+                    <div th:replace="~{consultas/fragmentos :: formPractica2}"></div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Formulario genérico para las consultas vistas en clase -->
+        <div th:fragment="formConsulta(colorForm, textoForm, urlForm)">
+            <form method="post" th:action="@{${urlForm}}" class="was-validated h-100">
+
+                <div class="card h-100">
+
+                    <div class="card-header text-center text-white" th:classappend="${'bg-' + colorForm}">
+                        <strong>[[${textoForm}]]</strong>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label">[[#{consultas.precio.inferior}]]</label>
+                            <input type="number"
+                                   step="0.01"
+                                   name="precioInf"
+                                   th:value="${precioInf}"
+                                   class="form-control"
+                                   min="0"
+                                   required/>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">[[#{consultas.precio.superior}]]</label>
+                            <input type="number"
+                                   step="0.01"
+                                   name="precioSup"
+                                   th:value="${precioSup}"
+                                   class="form-control"
+                                   min="0"
+                                   required/>
+                        </div>
+                    </div>
+
+                    <div class="card-footer text-center">
+                        <button type="submit" class="btn text-white" th:classappend="${'btn-' + colorForm}">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            [[${textoForm}]]
+                        </button>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+
+        <!-- Formulario específico para la Práctica #2 -->
+        <div th:fragment="formPractica2">
+            <form method="post" th:action="@{/consultas/practica2}" class="was-validated h-100">
+
+                <div class="card h-100 border-danger">
+
+                    <div class="card-header text-center text-white bg-danger">
+                        <strong>Práctica #2</strong>
+                    </div>
+
+                    <div class="card-body">
+                        <p class="small text-muted mb-2">
+                            Productos activos por categoría, descripción, precio y existencia.
+                        </p>
+
+                        <div class="mb-2">
+                            <label class="form-label">Categoría</label>
+                            <select name="idCategoria" class="form-select" required>
+                                <option value="0" th:selected="${idCategoria == null or idCategoria == 0}">
+                                    Todas las categorías
+                                </option>
+                                <option th:each="c : ${categorias}"
+                                        th:value="${c.idCategoria}"
+                                        th:text="${c.descripcion}"
+                                        th:selected="${idCategoria != null and idCategoria == c.idCategoria}">
+                                    Categoría
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="form-label">Texto en descripción</label>
+                            <input type="text"
+                                   name="texto"
+                                   th:value="${texto}"
+                                   class="form-control"
+                                   maxlength="50"
+                                   placeholder="Ejemplo: Monitor, Teclado, AMD"/>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="form-label">Precio inferior</label>
+                            <input type="number"
+                                   step="0.01"
+                                   name="precioInf"
+                                   th:value="${precioInf}"
+                                   class="form-control"
+                                   min="0"
+                                   required/>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="form-label">Precio superior</label>
+                            <input type="number"
+                                   step="0.01"
+                                   name="precioSup"
+                                   th:value="${precioSup}"
+                                   class="form-control"
+                                   min="0"
+                                   required/>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="form-label">Existencia mínima</label>
+                            <input type="number"
+                                   name="existenciaMin"
+                                   th:value="${existenciaMin}"
+                                   class="form-control"
+                                   min="0"
+                                   required/>
+                        </div>
+                    </div>
+
+                    <div class="card-footer text-center">
+                        <button type="submit" class="btn btn-danger text-white">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            Buscar Práctica #2
+                        </button>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+
+        <!-- Tarjetas de productos que muestran el resultado de la consulta -->
+        <section th:fragment="tarjetas" class="container py-4">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
+
+                <div th:if="${#lists.isEmpty(productos)}" class="col-12">
+                    <div class="alert alert-warning text-center">
+                        No hay productos para mostrar con los filtros seleccionados.
+                    </div>
+                </div>
+
+                <div th:each="p : ${productos}" class="col">
+                    <div class="card h-100 shadow-sm">
+
+                        <div class="d-flex justify-content-center align-items-center bg-light p-3" style="height: 180px;">
+                            <img th:if="${p.rutaImagen != null and !#strings.isEmpty(p.rutaImagen)}"
+                                 th:src="${p.rutaImagen}"
+                                 class="img-fluid"
+                                 th:alt="${p.descripcion}"
+                                 style="max-height: 100%; object-fit: contain;"/>
+                            <i th:unless="${p.rutaImagen != null and !#strings.isEmpty(p.rutaImagen)}"
+                               class="fa-solid fa-image fa-4x text-secondary"></i>
+                        </div>
+
+                        <div class="card-header bg-white">
+                            <h5 class="card-title text-center text-truncate mb-0" th:text="${p.descripcion}">
+                                Producto
+                            </h5>
+                        </div>
+
+                        <div class="card-body">
+                            <p class="card-text text-muted small text-truncate" th:text="${p.detalle}">
+                                Detalle del producto
+                            </p>
+
+                            <p class="mb-1">
+                                <strong>Categoría:</strong>
+                                <span th:text="${p.categoria != null ? p.categoria.descripcion : 'Sin categoría'}">Categoría</span>
+                            </p>
+                        </div>
+
+                        <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-bold text-success" th:text="${#numbers.formatCurrency(p.precio)}">
+                                    ₡0.00
+                                </div>
+
+                                <span th:if="${p.existencias > 0}"
+                                      class="badge text-bg-success"
+                                      th:text="${p.existencias} + ' unidades'">
+                                    0 unidades
+                                </span>
+
+                                <span th:unless="${p.existencias > 0}" class="badge text-bg-danger">
+                                    Agotado
+                                </span>
+                            </div>
+
+                            <span th:if="${p.activo}" class="badge bg-primary">Activo</span>
+                            <span th:unless="${p.activo}" class="badge bg-secondary">Inactivo</span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </body>
+</html>

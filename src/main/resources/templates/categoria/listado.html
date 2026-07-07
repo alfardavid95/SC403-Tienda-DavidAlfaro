@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="~{general/fragmentos :: head}"></head>
+
+    <body>
+        <header th:replace="~{general/fragmentos :: header}"></header>
+
+        <main class="container mt-4">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">[[#{categoria.agregar}]]</h4>
+                        </div>
+                        <div class="card-body">
+                            <form th:action="@{/categoria/guardar}" th:object="${categoria}" method="post">
+                                <input type="hidden" th:field="*{idCategoria}"/>
+
+                                <label class="form-label">[[#{categoria.descripcion}]]</label>
+                                <input type="text" th:field="*{descripcion}" class="form-control" required/>
+                                <div class="text-danger small" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
+
+                                <label class="form-label mt-3">[[#{categoria.imagen}]]</label>
+                                <input type="url" th:field="*{rutaImagen}" class="form-control"/>
+
+                                <div class="form-check mt-3">
+                                    <input type="checkbox" th:field="*{activo}" class="form-check-input"/>
+                                    <label class="form-check-label">[[#{categoria.activo}]]</label>
+                                </div>
+
+                                <button class="btn btn-success mt-3" type="submit">[[#{accion.guardar}]]</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-success text-white">
+                            <h4 class="mb-0">[[#{categoria.listado}]]</h4>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>[[#{categoria.descripcion}]]</th>
+                                        <th>[[#{categoria.activo}]]</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="c : ${categorias}">
+                                        <td th:text="${c.idCategoria}">1</td>
+                                        <td th:text="${c.descripcion}">Categoría</td>
+                                        <td>
+                                            <span class="badge bg-success" th:if="${c.activo}">Sí</span>
+                                            <span class="badge bg-secondary" th:unless="${c.activo}">No</span>
+                                        </td>
+                                        <td class="text-end">
+                                            <a class="btn btn-sm btn-outline-primary" th:href="@{/categoria/modificar/{id}(id=${c.idCategoria})}">[[#{accion.actualizar}]]</a>
+                                            <a class="btn btn-sm btn-outline-danger" th:href="@{/categoria/eliminar/{id}(id=${c.idCategoria})}">[[#{accion.eliminar}]]</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer th:replace="~{general/fragmentos :: footer}"></footer>
+    </body>
+</html>

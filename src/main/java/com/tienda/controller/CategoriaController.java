@@ -1,0 +1,54 @@
+package com.tienda.controller;
+
+import com.tienda.domain.Categoria;
+import com.tienda.service.CategoriaService;
+import jakarta.validation.Valid;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/categoria")
+public class CategoriaController {
+
+    private final CategoriaService categoriaService;
+
+    public CategoriaController(CategoriaService categoriaService) {
+        this.categoriaService = categoriaService;
+    }
+
+    @GetMapping("/listado")
+    public String listado(Model model) {
+        model.addAttribute("categorias", categoriaService.getCategorias(false));
+        model.addAttribute("categoria", new Categoria());
+        return "categoria/listado";
+    }
+
+    @PostMapping("/guardar")
+    public String guardar(@Valid Categoria categoria, BindingResult errores, Model model) {
+        if (errores.hasErrors()) {
+            model.addAttribute("categorias", categoriaService.getCategorias(false));
+            return "categoria/listado";
+        }
+        categoriaService.save(categoria);
+        return "redirect:/categoria/listado";
+    }
+
+    @GetMapping("/modificar/{idCategoria}")
+    public String modificar(@PathVariable Integer idCategoria, Model model) {
+        var categoria = categoriaService.getCategoria(idCategoria).orElse(new Categoria());
+        model.addAttribute("categoria", categoria);
+        model.addAttribute("categorias", categoriaService.getCategorias(false));
+        return "categoria/listado";
+    }
+
+    @GetMapping("/eliminar/{idCategoria}")
+    public String eliminar(@PathVariable Integer idCategoria) {
+        categoriaService.delete(idCategoria);
+        return "redirect:/categoria/listado";
+    }
+}
