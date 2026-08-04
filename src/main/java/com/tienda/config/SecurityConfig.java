@@ -2,7 +2,6 @@ package com.tienda.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -24,18 +23,23 @@ public class SecurityConfig {
                 .requestMatchers(
                     "/",
                     "/index",
+                    "/login",
                     "/consultas/**",
                     "/webjars/**",
                     "/css/**",
                     "/js/**",
                     "/images/**",
-                    "/img/**"
+                    "/img/**",
+                    "/error"
                 ).permitAll()
                 .requestMatchers("/categoria/**", "/producto/**").hasAnyRole("ADMIN", "VENDEDOR")
                 .requestMatchers("/usuario/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
-            .formLogin(Customizer.withDefaults())
+            .formLogin((form) -> form
+                .loginPage("/login")
+                .permitAll()
+            )
             .logout((logout) -> logout
                 .logoutSuccessUrl("/")
                 .permitAll()
