@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
     <head th:fragment="head">
         <title>[[#{aplicacion.titulo}]]</title>
@@ -43,6 +44,28 @@
                                     <li><a class="dropdown-item" th:href="@{/(lang=fr)}">Français</a></li>
                                     <li><a class="dropdown-item" th:href="@{/(lang=pt)}">Português</a></li>
                                 </ul>
+                            </li>
+
+                            <li class="nav-item px-2" sec:authorize="isAnonymous()">
+                                <a class="nav-link" th:href="@{/login}">
+                                    <i class="fas fa-sign-in-alt"></i> Login
+                                </a>
+                            </li>
+
+                            <li class="nav-item px-2" sec:authorize="isAuthenticated()">
+                                <span class="nav-link">
+                                    <i class="fas fa-user"></i>
+                                    <span sec:authentication="name"></span>
+                                </span>
+                            </li>
+
+                            <li class="nav-item px-2" sec:authorize="isAuthenticated()">
+                                <form th:action="@{/logout}" method="post" class="d-inline">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <button type="submit" class="btn btn-link nav-link p-0">
+                                        <i class="fas fa-sign-out-alt"></i> Logout
+                                    </button>
+                                </form>
                             </li>
                         </ul>
                     </div>
