@@ -30,6 +30,7 @@ public class SecurityConfig {
                     "/js/**",
                     "/images/**",
                     "/img/**",
+                    "/fav/**",
                     "/error"
                 ).permitAll()
                 .requestMatchers("/categoria/**", "/producto/**").hasAnyRole("ADMIN", "VENDEDOR")
@@ -38,6 +39,7 @@ public class SecurityConfig {
             )
             .formLogin((form) -> form
                 .loginPage("/login")
+                .defaultSuccessUrl("/", true)
                 .permitAll()
             )
             .logout((logout) -> logout
