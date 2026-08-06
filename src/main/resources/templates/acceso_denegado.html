@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Acceso denegado - Tienda</title>
+    <meta charset="UTF-8"/>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/webjars/font-awesome/css/all.min.css}" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+
+                <div class="card shadow border-danger">
+                    <div class="card-header bg-danger text-white text-center">
+                        <h4 class="mb-0">
+                            <i class="fas fa-ban"></i> Acceso denegado
+                        </h4>
+                    </div>
+
+                    <div class="card-body text-center">
+                        <p class="lead">
+                            No tiene permisos para acceder a esta sección.
+                        </p>
+
+                        <p>
+                            Esta página está protegida por roles de Spring Security.
+                        </p>
+
+                        <a th:href="@{/}" class="btn btn-primary">
+                            Volver al inicio
+                        </a>
+
+                        <a th:href="@{/login}" class="btn btn-secondary">
+                            Iniciar sesión con otro usuario
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

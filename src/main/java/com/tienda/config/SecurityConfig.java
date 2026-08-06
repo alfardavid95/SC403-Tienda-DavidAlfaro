@@ -24,6 +24,7 @@ public class SecurityConfig {
                     "/",
                     "/index",
                     "/login",
+                    "/acceso_denegado",
                     "/consultas/**",
                     "/webjars/**",
                     "/css/**",
@@ -33,6 +34,7 @@ public class SecurityConfig {
                     "/fav/**",
                     "/error"
                 ).permitAll()
+                .requestMatchers("/perfil").authenticated()
                 .requestMatchers("/categoria/**", "/producto/**").hasAnyRole("ADMIN", "VENDEDOR")
                 .requestMatchers("/usuario/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
@@ -45,6 +47,9 @@ public class SecurityConfig {
             .logout((logout) -> logout
                 .logoutSuccessUrl("/")
                 .permitAll()
+            )
+            .exceptionHandling((exception) -> exception
+                .accessDeniedPage("/acceso_denegado")
             );
 
         return http.build();
