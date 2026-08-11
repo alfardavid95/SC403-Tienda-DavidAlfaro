@@ -12,4 +12,9 @@ public class SeguridadController {
     public String pruebas() {
         return "seguridad/pruebas";
     }
+
+    @GetMapping("/sesion")
+    public String sesion() {
+        return "seguridad/sesion";
+    }
 }

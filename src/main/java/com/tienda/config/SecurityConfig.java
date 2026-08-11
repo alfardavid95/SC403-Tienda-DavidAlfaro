@@ -35,7 +35,8 @@ public class SecurityConfig {
                     "/error"
                 ).permitAll()
                 .requestMatchers("/perfil").authenticated()
-                .requestMatchers("/seguridad/**").hasRole("ADMIN")
+                .requestMatchers("/seguridad/sesion").authenticated()
+                .requestMatchers("/seguridad/pruebas").hasRole("ADMIN")
                 .requestMatchers("/categoria/**", "/producto/**").hasAnyRole("ADMIN", "VENDEDOR")
                 .requestMatchers("/usuario/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
