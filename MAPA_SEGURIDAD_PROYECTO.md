@@ -1,40 +1,40 @@
 # Mapa de seguridad del proyecto Tienda
 
-Este documento describe los archivos relacionados con la implementación de Spring Security en el proyecto.
+Este documento resume los archivos principales utilizados para implementar seguridad con Spring Security en el proyecto Tienda.
 
 ## Objetivo
 
-El objetivo de esta funcionalidad es agregar autenticación, autorización por roles, páginas protegidas y vistas dinámicas según el usuario autenticado.
+Agregar autenticacion, autorizacion por roles, login personalizado, logout, perfil de usuario, menu dinamico y paginas protegidas.
 
-## Archivos principales
+## Usuarios de prueba
 
-### src/main/java/com/tienda/config/SecurityConfig.java
-
-Archivo principal de configuración de seguridad.
-
-Define:
-
-- Rutas públicas.
-- Rutas protegidas.
-- Reglas por rol.
-- Login personalizado.
-- Logout.
-- Página de acceso denegado.
-- Usuarios de prueba en memoria.
-
-Usuarios configurados:
-
-| Usuario | Contraseña | Rol |
+| Usuario | Contrasena | Rol |
 |---------|------------|-----|
 | juan | 123 | ADMIN |
 | rebeca | 456 | VENDEDOR |
 | pedro | 789 | USUARIO |
 
-## Controladores agregados
+## Archivo principal de seguridad
+
+### src/main/java/com/tienda/config/SecurityConfig.java
+
+Este archivo define la configuracion principal de Spring Security.
+
+Incluye:
+
+- Rutas publicas.
+- Rutas protegidas.
+- Reglas de acceso por rol.
+- Login personalizado.
+- Logout.
+- Pagina de acceso denegado.
+- Usuarios de prueba en memoria.
+
+## Controladores relacionados
 
 ### src/main/java/com/tienda/controller/LoginController.java
 
-Controlador encargado de mostrar:
+Controlador utilizado para mostrar las siguientes paginas:
 
 - /login
 - /perfil
@@ -42,50 +42,50 @@ Controlador encargado de mostrar:
 
 ### src/main/java/com/tienda/controller/SeguridadController.java
 
-Controlador encargado del panel de pruebas de seguridad.
+Controlador utilizado para mostrar el panel de pruebas de seguridad.
 
-Ruta principal:
+Ruta:
 
 - /seguridad/pruebas
 
-## Vistas agregadas
+## Vistas relacionadas
 
 ### src/main/resources/templates/login.html
 
-Página personalizada de inicio de sesión.
+Pagina personalizada de inicio de sesion.
 
 Incluye:
 
-- Formulario de usuario y contraseña.
+- Formulario de login.
 - Token CSRF.
-- Tabla de usuarios de prueba.
-- Mensaje de error cuando el login falla.
-- Mensaje de logout correcto.
+- Tabla con usuarios de prueba.
+- Mensaje de error por credenciales incorrectas.
+- Mensaje de cierre de sesion exitoso.
 
 ### src/main/resources/templates/perfil.html
 
-Página de perfil del usuario autenticado.
+Pagina de perfil del usuario autenticado.
 
 Muestra:
 
 - Usuario autenticado.
 - Rol detectado.
-- Accesos disponibles según rol.
-- Botones rápidos según permisos.
-- Logout.
+- Accesos disponibles.
+- Botones rapidos segun permisos.
+- Opcion para cerrar sesion.
 
 ### src/main/resources/templates/acceso_denegado.html
 
-Página personalizada para usuarios sin permisos.
+Pagina personalizada para accesos bloqueados.
 
 Muestra:
 
 - Usuario autenticado.
-- Mensaje de acceso bloqueado.
+- Mensaje de acceso denegado.
 - Roles requeridos.
-- Botón para volver al inicio.
-- Botón para ver perfil.
-- Botón para cerrar sesión.
+- Boton para volver al inicio.
+- Boton para ver perfil.
+- Boton para cerrar sesion.
 
 ### src/main/resources/templates/seguridad/pruebas.html
 
@@ -96,64 +96,64 @@ Muestra:
 - Usuarios de prueba.
 - Roles.
 - Rutas protegidas.
-- Permisos esperados por cada rol.
+- Permisos esperados por cada usuario.
 
-## Menú dinámico
+## Menu dinamico
 
 ### src/main/resources/templates/general/fragmentos.html
 
-El menú utiliza Thymeleaf Extras Spring Security para mostrar opciones según el rol.
+El menu usa Thymeleaf Extras Spring Security para mostrar opciones segun el rol del usuario.
 
 Comportamiento esperado:
 
-### Sin login
+Sin login:
 
 - Inicio
 - Consultas
 - Idioma
 - Login
 
-### ADMIN
+ADMIN:
 
 - Inicio
-- Categorías
+- Categorias
 - Productos
 - Consultas
 - Perfil
 - Seguridad
 - Logout
 
-### VENDEDOR
+VENDEDOR:
 
 - Inicio
-- Categorías
+- Categorias
 - Productos
 - Consultas
 - Perfil
 - Logout
 
-### USUARIO
+USUARIO:
 
 - Inicio
 - Consultas
 - Perfil
 - Logout
 
-## Rutas públicas
+## Rutas publicas
 
-| Ruta | Descripción |
+| Ruta | Descripcion |
 |------|-------------|
 | / | Inicio |
 | /index | Inicio |
 | /login | Login personalizado |
-| /consultas/** | Consulta ampliada de práctica 2 |
+| /consultas/** | Consulta ampliada de practica 2 |
 | /webjars/** | Recursos web |
 | /css/** | Estilos |
 | /js/** | Scripts |
-| /images/** | Imágenes |
-| /img/** | Imágenes |
+| /images/** | Imagenes |
+| /img/** | Imagenes |
 | /fav/** | Favicon |
-| /error | Página de error |
+| /error | Pagina de error |
 
 ## Rutas protegidas
 
@@ -165,22 +165,22 @@ Comportamiento esperado:
 | /seguridad/** | ADMIN |
 | /usuario/** | ADMIN |
 
-## Validación esperada
+## Validacion esperada
 
 - Juan puede acceder a todas las rutas protegidas.
-- Rebeca puede acceder a productos y categorías.
+- Rebeca puede acceder a productos y categorias.
 - Pedro solo puede acceder a inicio, consultas y perfil.
 - Si un usuario intenta acceder a una ruta no permitida, se redirige a /acceso_denegado.
-- El menú cambia visualmente según el rol autenticado.
+- El menu cambia visualmente segun el rol autenticado.
 
-## Relación con el curso
+## Relacion con el curso
 
-Esta implementación aplica conceptos vistos en Spring Security:
+Esta implementacion aplica conceptos de Spring Security:
 
-- Autenticación.
-- Autorización.
+- Autenticacion.
+- Autorizacion.
 - Roles.
-- Protección de rutas.
+- Proteccion de rutas.
 - Login personalizado.
 - Logout.
-- Integración de Spring Security con Thymeleaf.
+- Integracion de Spring Security con Thymeleaf.
