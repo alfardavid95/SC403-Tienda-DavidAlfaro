@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Acceso denegado - Tienda</title>
     <meta charset="UTF-8"/>
     <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
-    <link th:href="@{/webjars/font-awesome/css/all.min.css}" rel="stylesheet"/>
+    <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet"/>
 </head>
 <body class="bg-light">
 
@@ -21,21 +22,54 @@
                     </div>
 
                     <div class="card-body text-center">
+
+                        <div class="alert alert-warning" sec:authorize="isAuthenticated()">
+                            Usuario autenticado:
+                            <strong sec:authentication="name"></strong>
+                        </div>
+
                         <p class="lead">
                             No tiene permisos para acceder a esta sección.
                         </p>
 
                         <p>
-                            Esta página está protegida por roles de Spring Security.
+                            Esta ruta está protegida por roles de Spring Security.
                         </p>
 
-                        <a th:href="@{/}" class="btn btn-primary">
-                            Volver al inicio
-                        </a>
+                        <hr/>
 
-                        <a th:href="@{/login}" class="btn btn-secondary">
-                            Iniciar sesión con otro usuario
-                        </a>
+                        <h5>Permisos requeridos</h5>
+
+                        <p class="mb-1">
+                            Para acceder a productos o categorías se requiere:
+                        </p>
+
+                        <div class="mb-3">
+                            <span class="badge bg-danger">ADMIN</span>
+                            <span class="badge bg-warning text-dark">VENDEDOR</span>
+                        </div>
+
+                        <p sec:authorize="hasRole('USUARIO')" class="text-muted">
+                            Su usuario tiene rol USUARIO, por eso el acceso fue bloqueado correctamente.
+                        </p>
+
+                        <div class="d-flex justify-content-center flex-wrap gap-2 mt-4">
+                            <a th:href="@{/}" class="btn btn-primary">
+                                <i class="fas fa-home"></i> Volver al inicio
+                            </a>
+
+                            <a th:href="@{/perfil}" class="btn btn-secondary" sec:authorize="isAuthenticated()">
+                                <i class="fas fa-user"></i> Ver perfil
+                            </a>
+
+                            <form th:action="@{/logout}" method="post" class="d-inline" sec:authorize="isAuthenticated()">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                <button type="submit" class="btn btn-outline-danger">
+                                    <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                                </button>
+                            </form>
+                        </div>
+
                     </div>
                 </div>
 
