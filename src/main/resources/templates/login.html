@@ -5,17 +5,19 @@
     <title>Iniciar sesión - Tienda</title>
     <meta charset="UTF-8"/>
     <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
-    <link th:href="@{/webjars/font-awesome/css/all.min.css}" rel="stylesheet"/>
+    <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet"/>
 </head>
 <body class="bg-light">
 
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-5">
+            <div class="col-md-6">
 
                 <div class="card shadow">
                     <div class="card-header bg-dark text-white text-center">
-                        <h4 class="mb-0">Iniciar sesión</h4>
+                        <h4 class="mb-0">
+                            <i class="fas fa-sign-in-alt"></i> Iniciar sesión
+                        </h4>
                     </div>
 
                     <div class="card-body">
@@ -49,16 +51,54 @@
                     </div>
 
                     <div class="card-footer text-center">
-                        <a th:href="@{/}">Volver al inicio</a>
+                        <a th:href="@{/}" class="btn btn-outline-secondary">
+                            Volver al inicio
+                        </a>
                     </div>
                 </div>
 
-                <div class="card mt-3">
+                <div class="card mt-3 shadow-sm">
+                    <div class="card-header bg-secondary text-white">
+                        <strong>Usuarios de prueba</strong>
+                    </div>
+
                     <div class="card-body">
-                        <h6>Usuarios de prueba</h6>
-                        <p class="mb-1"><strong>Admin:</strong> juan / 123</p>
-                        <p class="mb-1"><strong>Vendedor:</strong> rebeca / 456</p>
-                        <p class="mb-0"><strong>Usuario:</strong> pedro / 789</p>
+                        <table class="table table-bordered table-sm mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Contraseña</th>
+                                    <th>Rol</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>juan</td>
+                                    <td>123</td>
+                                    <td>
+                                        <span class="badge bg-danger">ADMIN</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>rebeca</td>
+                                    <td>456</td>
+                                    <td>
+                                        <span class="badge bg-warning text-dark">VENDEDOR</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>pedro</td>
+                                    <td>789</td>
+                                    <td>
+                                        <span class="badge bg-secondary">USUARIO</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p class="text-muted mt-3 mb-0">
+                            Estos usuarios se utilizan para validar autenticación, autorización y permisos por rol.
+                        </p>
                     </div>
                 </div>
 
