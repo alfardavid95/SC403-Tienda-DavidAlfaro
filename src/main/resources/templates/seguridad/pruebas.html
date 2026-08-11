@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Pruebas de seguridad - Tienda</title>
+    <meta charset="UTF-8"/>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-shield-alt"></i> Panel de pruebas de seguridad
+                </h4>
+            </div>
+
+            <div class="card-body">
+
+                <div class="alert alert-info">
+                    Usuario autenticado:
+                    <strong sec:authentication="name"></strong>
+                </div>
+
+                <h5>Usuarios de prueba</h5>
+
+                <table class="table table-bordered table-hover mt-3">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Contraseña</th>
+                            <th>Rol</th>
+                            <th>Acceso esperado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>juan</td>
+                            <td>123</td>
+                            <td>ADMIN</td>
+                            <td>Acceso a todo el sistema, incluyendo este panel.</td>
+                        </tr>
+                        <tr>
+                            <td>rebeca</td>
+                            <td>456</td>
+                            <td>VENDEDOR</td>
+                            <td>Acceso a productos y categorías. No puede entrar al panel de seguridad.</td>
+                        </tr>
+                        <tr>
+                            <td>pedro</td>
+                            <td>789</td>
+                            <td>USUARIO</td>
+                            <td>Acceso limitado. No puede entrar a productos, categorías ni seguridad.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h5 class="mt-4">Rutas protegidas</h5>
+
+                <table class="table table-bordered table-hover mt-3">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Ruta</th>
+                            <th>Permiso aplicado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>/consultas/**</td>
+                            <td>Pública. Se permite sin iniciar sesión.</td>
+                        </tr>
+                        <tr>
+                            <td>/perfil</td>
+                            <td>Requiere usuario autenticado.</td>
+                        </tr>
+                        <tr>
+                            <td>/producto/**</td>
+                            <td>Requiere rol ADMIN o VENDEDOR.</td>
+                        </tr>
+                        <tr>
+                            <td>/categoria/**</td>
+                            <td>Requiere rol ADMIN o VENDEDOR.</td>
+                        </tr>
+                        <tr>
+                            <td>/seguridad/**</td>
+                            <td>Requiere rol ADMIN.</td>
+                        </tr>
+                        <tr>
+                            <td>/usuario/**</td>
+                            <td>Requiere rol ADMIN.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="mt-4">
+                    <a th:href="@{/}" class="btn btn-primary">
+                        Volver al inicio
+                    </a>
+
+                    <a th:href="@{/perfil}" class="btn btn-secondary">
+                        Ver perfil
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

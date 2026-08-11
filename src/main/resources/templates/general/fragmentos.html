@@ -58,6 +58,12 @@
                                     Perfil
                                 </a>
                             </li>
+
+                            <li class="nav-item px-2" sec:authorize="hasRole('ADMIN')">
+                                <a class="nav-link" th:href="@{/seguridad/pruebas}">
+                                    Seguridad
+                                </a>
+                            </li>
                         </ul>
 
                         <ul class="navbar-nav">
