@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Acerca del proyecto - TechShop</title>
+    <meta charset="UTF-8"/>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5 mb-5">
+
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-store"></i> TechShop - Información del proyecto
+                </h4>
+            </div>
+
+            <div class="card-body">
+
+                <div class="alert alert-info">
+                    Esta página resume las funcionalidades principales implementadas en el proyecto.
+                </div>
+
+                <h5>Descripción</h5>
+                <p>
+                    TechShop es una aplicación web desarrollada con Spring Boot, Thymeleaf,
+                    MySQL y Spring Security. El proyecto incluye una consulta ampliada de productos
+                    y funcionalidades de seguridad basadas en autenticación y autorización por roles.
+                </p>
+
+                <hr/>
+
+                <h5>Stack tecnológico</h5>
+
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="badge bg-primary">Java 17</span>
+                    <span class="badge bg-success">Spring Boot</span>
+                    <span class="badge bg-success">Spring MVC</span>
+                    <span class="badge bg-success">Spring Data JPA</span>
+                    <span class="badge bg-danger">Spring Security</span>
+                    <span class="badge bg-warning text-dark">Thymeleaf</span>
+                    <span class="badge bg-info text-dark">MySQL</span>
+                    <span class="badge bg-secondary">Bootstrap</span>
+                    <span class="badge bg-dark">Maven</span>
+                    <span class="badge bg-dark">GitHub</span>
+                </div>
+
+                <h5>Funcionalidades principales</h5>
+
+                <ul class="list-group mb-4">
+                    <li class="list-group-item">Consulta ampliada de productos.</li>
+                    <li class="list-group-item">Filtros por categoría, texto, precio y existencia mínima.</li>
+                    <li class="list-group-item">Login personalizado.</li>
+                    <li class="list-group-item">Roles ADMIN, VENDEDOR y USUARIO.</li>
+                    <li class="list-group-item">Protección de rutas según rol.</li>
+                    <li class="list-group-item">Menú dinámico según autenticación.</li>
+                    <li class="list-group-item">Perfil de usuario.</li>
+                    <li class="list-group-item">Página personalizada de acceso denegado.</li>
+                    <li class="list-group-item">Panel de pruebas de seguridad.</li>
+                </ul>
+
+                <h5>Usuarios de prueba</h5>
+
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Contraseña</th>
+                            <th>Rol</th>
+                            <th>Permisos principales</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>juan</td>
+                            <td>123</td>
+                            <td><span class="badge bg-danger">ADMIN</span></td>
+                            <td>Acceso completo al sistema.</td>
+                        </tr>
+                        <tr>
+                            <td>rebeca</td>
+                            <td>456</td>
+                            <td><span class="badge bg-warning text-dark">VENDEDOR</span></td>
+                            <td>Acceso a productos y categorías.</td>
+                        </tr>
+                        <tr>
+                            <td>pedro</td>
+                            <td>789</td>
+                            <td><span class="badge bg-secondary">USUARIO</span></td>
+                            <td>Acceso limitado a consultas y perfil.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h5 class="mt-4">Rutas principales</h5>
+
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Ruta</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>/</td>
+                            <td>Página principal.</td>
+                        </tr>
+                        <tr>
+                            <td>/login</td>
+                            <td>Inicio de sesión personalizado.</td>
+                        </tr>
+                        <tr>
+                            <td>/consultas/listado</td>
+                            <td>Consulta ampliada de productos.</td>
+                        </tr>
+                        <tr>
+                            <td>/perfil</td>
+                            <td>Perfil del usuario autenticado.</td>
+                        </tr>
+                        <tr>
+                            <td>/acceso_denegado</td>
+                            <td>Página para accesos bloqueados.</td>
+                        </tr>
+                        <tr>
+                            <td>/seguridad/pruebas</td>
+                            <td>Panel de pruebas de seguridad para ADMIN.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-center mt-4">
+                    <a th:href="@{/}" class="btn btn-primary">
+                        <i class="fas fa-home"></i> Volver al inicio
+                    </a>
+
+                    <a th:href="@{/consultas/listado}" class="btn btn-success">
+                        <i class="fas fa-search"></i> Ver consulta ampliada
+                    </a>
+
+                    <a th:href="@{/login}" class="btn btn-dark">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar sesión
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
