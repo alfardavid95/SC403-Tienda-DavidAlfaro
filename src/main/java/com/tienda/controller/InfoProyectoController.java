@@ -12,4 +12,9 @@ public class InfoProyectoController {
     public String acerca() {
         return "consultas/acerca";
     }
+
+    @GetMapping("/roles")
+    public String roles() {
+        return "consultas/roles";
+    }
 }
